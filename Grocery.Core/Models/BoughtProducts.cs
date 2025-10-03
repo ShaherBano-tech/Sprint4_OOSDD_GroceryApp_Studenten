@@ -3,13 +3,16 @@ namespace Grocery.Core.Models
 {
     public class BoughtProducts
     {
-        public Product Product { get; set; }
+        
         public Client Client { get; set; }
         public GroceryList GroceryList { get; set; }
-        public BoughtProducts(Client client, GroceryList groceryList, Product product)
+        public Product Product { get; set; }
+
+        public BoughtProducts() {}
+        public BoughtProducts(Client client, GroceryList list, Product product)
         {
             Client = client;
-            GroceryList = groceryList;
+            GroceryList = list;
             Product = product;
         }
     }
