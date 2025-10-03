@@ -51,16 +51,27 @@ namespace Grocery.Core.Services
 
         public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
         {
-            var bestSellers = new List<BestSellingProducts>
-            {   
-                new BestSellingProducts { Rank = 1, Name = "Appels", SoldQuantity = 25, Stock = 100 },
-                new BestSellingProducts { Rank = 2, Name = "Bananen", SoldQuantity = 20, Stock = 80 },
-                new BestSellingProducts { Rank = 3, Name = "Melk", SoldQuantity = 15, Stock = 50 },
-                new BestSellingProducts { Rank = 4, Name = "Brood", SoldQuantity = 10, Stock = 40 },
-                new BestSellingProducts { Rank = 5, Name = "Kaas", SoldQuantity = 5, Stock = 30 }
-            };
+            var allItems = GetAll();
 
-            return bestSellers.Take(topX).ToList();
+            var bestSellers = allItems
+                .GroupBy(i => i.ProductId)
+                .Select(group => new BestSellingProducts
+                {
+                    Name = group.First().Product.Name,
+                    SoldQuantity = group.Sum(x => x.Amount),
+                    Stock = group.First().Product.Stock
+                })
+                .OrderByDescending(p => p.SoldQuantity)
+                .Take(topX)
+                .ToList();
+
+            for (int i = 0; i < bestSellers.Count; i++)
+            {
+                bestSellers[i].Rank = i + 1;
+            }
+
+            return bestSellers;
+
             //throw new NotImplementedException();
         }
 
