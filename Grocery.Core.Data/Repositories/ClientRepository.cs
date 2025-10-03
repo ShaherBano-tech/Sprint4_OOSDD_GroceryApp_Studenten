@@ -10,16 +10,17 @@ namespace Grocery.Core.Data.Repositories
 
         public ClientRepository()
         {
-            clientList = [
-                new Client(1, "M.J. Curie", "user1@mail.com", "IunRhDKa+fWo8+4/Qfj7Pg==.kDxZnUQHCZun6gLIE6d9oeULLRIuRmxmH2QKJv2IM08="),
-                new Client(2, "H.H. Hermans", "user2@mail.com", "dOk+X+wt+MA9uIniRGKDFg==.QLvy72hdG8nWj1FyL75KoKeu4DUgu5B/HAHqTD2UFLU="),
-                new Client(3, "A.J. Kwak", "user3@mail.com", "sxnIcZdYt8wC8MYWcQVQjQ==.FKd5Z/jwxPv3a63lX+uvQ0+P7EuNYZybvkmdhbnkIHA=")
-            ];
+            clientList = new List<Client>
+            {
+                new Client { Id = 1, Name = "M.J. Curie", Email = "user1@mail.com", Password = "IunRhDKa+fWo8+4/Qfj7Pg==.kDxZnUQHCZun6gLIE6d9oeULLRIuRmxmH2QKJv2IM08=", Role = Role.None },
+                new Client { Id = 2, Name = "H.H. Hermans", Email = "user2@mail.com", Password = "dOk+X+wt+MA9uIniRGKDFg==.QLvy72hdG8nWj1FyL75KoKeu4DUgu5B/HAHqTD2UFLU=", Role = Role.None },
+                new Client { Id = 3, Name = "A.J. Kwak", Email = "user3@mail.com", Password = "sxnIcZdYt8wC8MYWcQVQjQ==.FKd5Z/jwxPv3a63lX+uvQ0+P7EuNYZybvkmdhbnkIHA=", Role = Role.Admin }
+            };
         }
 
         public Client? Get(string email)
         {
-            Client? client = clientList.FirstOrDefault(c => c.EmailAddress.Equals(email));
+            Client? client = clientList.FirstOrDefault(c => c.Email.Equals(email));
             return client;
         }
 
